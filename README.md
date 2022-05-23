@@ -1,1 +1,1 @@
-# wikipedia-module
+# Winchester 2 - wikipedia module
