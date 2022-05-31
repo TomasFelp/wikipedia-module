@@ -11,7 +11,7 @@ object WikipediaInjector {
         .addConverterFactory(ScalarsConverterFactory.create())
         .build()
     private val wikipediaAPI = wikipediaAPIRetrofit.create(WikipediaAPI::class.java)
-    private val wikipediaToDescriptionResolver: WikipediaToDescriptionResolver = WikipediaToDescriptionResolver()
+    private val wikipediaToDescriptionResolver: WikipediaToDescriptionResolver = WikipediaToDescriptionResolverImpl()
 
     val wikipediaService: ExternalRepository = ExternalRepositoryImpl(
         wikipediaAPI, wikipediaToDescriptionResolver

@@ -2,7 +2,7 @@ package ayds.winchester2.wikipedia
 
 
 interface ExternalRepository {
-    fun getArtistDescription(artistName: String): Description
+    fun getArtistDescription(artistName: String): WikipediaArticle
 }
 
 internal class ExternalRepositoryImpl(
@@ -10,7 +10,7 @@ internal class ExternalRepositoryImpl(
     private var wikipediaToDescriptionResolver: WikipediaToDescriptionResolver
 ) : ExternalRepository {
 
-    override fun getArtistDescription(artistName: String): Description {
+    override fun getArtistDescription(artistName: String): WikipediaArticle {
         val queryWikipediaSearch = wikipediaAPI.getArtistInfo(artistName).execute()
 
         return wikipediaToDescriptionResolver.getDescriptionFromExternalData(queryWikipediaSearch)

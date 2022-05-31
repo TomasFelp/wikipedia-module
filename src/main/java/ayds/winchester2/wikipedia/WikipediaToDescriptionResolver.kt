@@ -11,14 +11,18 @@ private const val SEARCH = "search"
 private const val PAGE_ID = "pageid"
 private const val QUERY = "query"
 
-internal class WikipediaToDescriptionResolver {
+interface WikipediaToDescriptionResolver{
+    fun getDescriptionFromExternalData(queryWikipediaSearch : Response<String>): WikipediaArticle
+}
+
+internal class WikipediaToDescriptionResolverImpl : WikipediaToDescriptionResolver{
 
     private fun makeDescription(queryWikipediaSearch: JsonObject): String {
         val snippet = getSnippet(queryWikipediaSearch)
         return getArtistDescription(snippet)
     }
 
-    fun getDescriptionFromExternalData(queryWikipediaSearch : Response<String>): Description {
+    override fun getDescriptionFromExternalData(queryWikipediaSearch : Response<String>): WikipediaArticle {
 
         val gson = Gson()
         val jObj = gson.fromJson(queryWikipediaSearch.body(), JsonObject::class.java)
@@ -28,7 +32,7 @@ internal class WikipediaToDescriptionResolver {
         val artistDescription = makeDescription(query)
         val pageId = getPageId(query).asString
 
-        return Description(pageId,artistDescription)
+        return WikipediaArticle(pageId,artistDescription)
     }
 
     private fun getSnippet(json: JsonObject) : JsonElement {
