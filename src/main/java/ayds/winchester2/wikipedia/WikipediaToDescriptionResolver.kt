@@ -11,6 +11,9 @@ private const val SEARCH = "search"
 private const val PAGE_ID = "pageid"
 private const val QUERY = "query"
 
+private const val URL_LOGO = "https://upload.wikimedia.org/wikipedia/commons/8/8c/Wikipedia-logo-v2-es.png"
+private const val URL_SOURCE = "https://en.wikipedia.org/?curid="
+
 interface WikipediaToDescriptionResolver{
     fun getDescriptionFromExternalData(queryWikipediaSearch : Response<String>): WikipediaArticle
 }
@@ -30,9 +33,9 @@ internal class WikipediaToDescriptionResolverImpl : WikipediaToDescriptionResolv
         val query = jObj[QUERY].asJsonObject
 
         val artistDescription = makeDescription(query)
-        val pageId = getPageId(query).asString
+        val pageUrl = URL_SOURCE + getPageId(query).asString
 
-        return WikipediaArticle(pageId,artistDescription)
+        return WikipediaArticle(pageUrl,artistDescription,URL_LOGO)
     }
 
     private fun getSnippet(json: JsonObject) : JsonElement {
